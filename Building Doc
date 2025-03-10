@@ -1,0 +1,9 @@
+Building the client:
+1. Receive a message and the server PID from the command line
+2. Take that message and convert its char to its binary representation (I can put all the numbers in order on a string).
+2.1. Create an int mask = 0b10000000
+2.2. using the mask compare the char and mask using the & operator which compares both bits and if there is a place where both bits are 1 it return 1 else it returns 0
+2.3 Send the a signal depending on the result, if 1 SIGUSR1 else if 0 SIGUSR2 using the kill function
+2.4 shift the bits in mask and assign 1 to the new bit location >>= 1
+2.5 Wait for a signal back to verify that the letter was received from the server
+2.5 After all letters have been sent then send a NULL 
