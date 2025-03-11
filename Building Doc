@@ -12,4 +12,7 @@ Building the server:
 2. Create and infinite loop that is going to be receiving the signals
 2.1 Make if condition that use sigaction(signal, act, NULL) and depending on the signal add a 0 or a 1 to an int.
 2.2 Convert binary to the the char it represents and send it to ft_strlcat as src with the final string array as the destination (Repeat until NULL is sent).
+2.2.1 In order to do this I need to create a char and initialize it with 0
+2.2.2 Then I need to in a loop if i reiceive either a SIGUSR1 or a SIGUSR2 signal bit shift to the left and if the signal is SIGUSR2(That would correspond to a 1) use the | 1 operator to the bit.
+2.2.3 use ft_strlcat to concatenate the char to the string
 2.3 print the string to the terminal.
