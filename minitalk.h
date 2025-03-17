@@ -6,7 +6,7 @@
 /*   By: skarras <skarras@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 10:30:14 by skarras           #+#    #+#             */
-/*   Updated: 2025/03/11 11:48:40 by skarras          ###   ########.fr       */
+/*   Updated: 2025/03/17 12:56:24 by skarras          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,20 @@
 #include "./Custom_Libft/libft.h"
 #include <signal.h>
 
-void	send(char *pid, char a);
-void	_kill(char *pid, int signal);
-void	miniclient(char *pid, char *message);
+char	letter = 0;
+
+typedef struct	s_message
+{
+	char	*message;
+	char	letter[9];
+	int		pos;
+}	t_message;
+
+void	handler(int sig, siginfo_t *info, void *vp);
+void	send(int pid, char a);
+void	_kill(int pid, int signal);
+void	miniclient(int pid, char *message);
+void	build_message(char c);
+void	miniserver();
 
 #endif
