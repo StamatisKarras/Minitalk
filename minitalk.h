@@ -6,7 +6,7 @@
 /*   By: skarras <skarras@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 10:30:14 by skarras           #+#    #+#             */
-/*   Updated: 2025/03/19 11:08:40 by skarras          ###   ########.fr       */
+/*   Updated: 2025/03/19 11:28:16 by skarras          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,6 @@
 
 # include "./Custom_Libft/libft.h"
 # include <signal.h>
-
-typedef struct s_message
-{
-	char	*message;
-	char	letter[9];
-	int		pos;
-}	t_message;
 
 void	handler(int sig, siginfo_t *info, void *vp);
 void	send(int pid, char a);
