@@ -6,7 +6,7 @@
 /*   By: skarras <skarras@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 10:30:10 by skarras           #+#    #+#             */
-/*   Updated: 2025/03/17 13:23:34 by skarras          ###   ########.fr       */
+/*   Updated: 2025/03/19 11:08:07 by skarras          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,16 +46,18 @@ void	_kill(int pid, int signal)
 		i = kill(pid, SIGUSR1);
 		if (i == -1)
 		{
-			write(2, "Failed to send a signal\n", ft_strlen("Failed to send a signal\n"));
+			write(2, "Failed to send a signal\n",
+				ft_strlen("Failed to send a signal\n"));
 			exit(-1);
 		}
 	}
-	else if(signal == SIGUSR2)
+	else if (signal == SIGUSR2)
 	{
 		i = kill(pid, SIGUSR2);
 		if (i == -1)
 		{
-			write(2, "Failed to send a signal\n", ft_strlen("Failed to send a signal\n"));
+			write(2, "Failed to send a signal\n",
+				ft_strlen("Failed to send a signal\n"));
 			exit(-1);
 		}
 	}

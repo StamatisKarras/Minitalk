@@ -8,14 +8,15 @@ LIB_DIR = ./Custom_Libft/
 HEADERS = -I $(LIB_DIR) -I .
 LIBFT_A = $(LIB_DIR)/libft.a
 
-SRC_SERVER = server.c
+SRC_SERVER = server.c \
+			 helper.c
 SRC_CLIENT = client.c
 OBJ_SERVER = $(SRC_SERVER:.c=.o)
 OBJ_CLIENT = $(SRC_CLIENT:.c=.o)
 
 .SILENT:
 
-all: $(SERVER) $(CLIENT) $(LIBFT_A)
+all: $(LIBFT_A) $(SERVER) $(CLIENT)
 
 $(SERVER): $(OBJ_SERVER)
 	$(CC) $(FLAGS) $(OBJ_SERVER) $(HEADERS) $(LIBFT_A) -o $(SERVER)

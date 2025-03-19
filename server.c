@@ -6,7 +6,7 @@
 /*   By: skarras <skarras@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 11:27:12 by skarras           #+#    #+#             */
-/*   Updated: 2025/03/17 13:34:45 by skarras          ###   ########.fr       */
+/*   Updated: 2025/03/19 11:20:44 by skarras          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,9 @@
 
 void	build_letter(int byte)
 {
-	static	int	count;
+	static int	count;
+	static char	letter;
 
-	if (count == 8)
-	{
-		ft_printf("%c\n", letter);
-		build_message(letter);
-		count = 0;
-		letter = 0;
-	}
 	if (byte == 1 || byte == 0)
 	{
 		if (byte == 1)
@@ -34,53 +28,70 @@ void	build_letter(int byte)
 			letter = (letter << 1);
 		count++;
 	}
+	if (count == 8)
+	{
+		build_message(letter);
+		count = 0;
+		letter = 0;
+	}
 }
 
 void	build_message(char c)
 {
 	static char	*message;
 
-	if (message == NULL)
-	{
-		message = malloc(1);
-		message[0] = '\0';
-	}
-	message = ft_strjoin(message, &c);
-	ft_printf("%s\n", message);
 	if (c == '\0')
 	{
 		ft_printf("%s\n", message);
 		free(message);
 		message = NULL;
+		return ;
 	}
+	if (message == NULL)
+	{
+		message = malloc(1);
+		message[0] = '\0';
+	}
+	message = msgjoin(message, c);
 }
 
 void	handler(int sig, siginfo_t *info, void *vp)
 {
+	int		i;
+
 	(void) vp;
-	(void) info;
 	if (sig == SIGUSR1)
 	{
 		build_letter(1);
-		kill(info->si_pid, SIGUSR1);
+		i = kill(info->si_pid, SIGUSR1);
+		if (i == -1)
+		{
+			ft_printf("Error receiving signal");
+			exit(-1);
+		}
 	}
 	else if (sig == SIGUSR2)
 	{
 		build_letter(0);
-		kill(info->si_pid, SIGUSR1);
+		i = kill(info->si_pid, SIGUSR1);
+		if (i == -1)
+		{
+			ft_printf("Error receiving signal");
+			exit(-1);
+		}
 	}
 }
 
-void	miniserver()
+void	miniserver(void)
 {
-	struct sigaction 	action;
+	struct sigaction	action;
 
 	action.sa_flags = SA_SIGINFO;
 	action.sa_sigaction = handler;
 	sigemptyset(&action.sa_mask);
 	sigaction(SIGUSR1, &action, NULL);
 	sigaction(SIGUSR2, &action, NULL);
-	while(1)
+	while (1)
 	{
 		pause();
 	}
