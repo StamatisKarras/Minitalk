@@ -6,23 +6,34 @@
 /*   By: skarras <skarras@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 10:30:10 by skarras           #+#    #+#             */
-/*   Updated: 2025/03/20 13:17:19 by skarras          ###   ########.fr       */
+/*   Updated: 2025/03/20 14:25:48 by skarras          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
+static int	g_ready;
+
 void	sig_handler(int sig)
 {
 	(void) sig;
+	if (sig == SIGUSR1)
+		g_ready = 1;
 }
 
 void	send(int pid, char a)
 {
-	int	j;
-	int	mask;
+	int					j;
+	int					mask;
+	struct sigaction	action;
+	struct sigaction	ignore;
 
-	signal(SIGUSR1, sig_handler);
+	action.sa_handler = sig_handler;
+	ignore.sa_handler = SIG_IGN;
+	sigemptyset(&action.sa_mask);
+	sigaddset(&action.sa_mask, SIGUSR1);
+	sigaction(SIGUSR1, &action, NULL);
+	sigaction(SIGINT, &ignore, NULL);
 	j = 0;
 	mask = 0b10000000;
 	while (j != 8)
@@ -33,7 +44,9 @@ void	send(int pid, char a)
 			_kill(pid, SIGUSR2);
 		mask >>= 1;
 		j++;
-		pause();
+		while (g_ready == 0)
+			usleep(1);
+		g_ready = 0;
 	}
 }
 

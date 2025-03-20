@@ -6,7 +6,7 @@
 /*   By: skarras <skarras@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 11:27:12 by skarras           #+#    #+#             */
-/*   Updated: 2025/03/19 11:20:44 by skarras          ###   ########.fr       */
+/*   Updated: 2025/03/20 13:53:27 by skarras          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,28 +57,16 @@ void	build_message(char c)
 
 void	handler(int sig, siginfo_t *info, void *vp)
 {
-	int		i;
-
 	(void) vp;
 	if (sig == SIGUSR1)
 	{
 		build_letter(1);
-		i = kill(info->si_pid, SIGUSR1);
-		if (i == -1)
-		{
-			ft_printf("Error receiving signal");
-			exit(-1);
-		}
+		kill(info->si_pid, SIGUSR1);
 	}
 	else if (sig == SIGUSR2)
 	{
 		build_letter(0);
-		i = kill(info->si_pid, SIGUSR1);
-		if (i == -1)
-		{
-			ft_printf("Error receiving signal");
-			exit(-1);
-		}
+		kill(info->si_pid, SIGUSR1);
 	}
 }
 
@@ -89,6 +77,8 @@ void	miniserver(void)
 	action.sa_flags = SA_SIGINFO;
 	action.sa_sigaction = handler;
 	sigemptyset(&action.sa_mask);
+	sigaddset(&action.sa_mask, SIGUSR1);
+	sigaddset(&action.sa_mask, SIGUSR2);
 	sigaction(SIGUSR1, &action, NULL);
 	sigaction(SIGUSR2, &action, NULL);
 	while (1)
