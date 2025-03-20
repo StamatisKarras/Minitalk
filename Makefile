@@ -1,5 +1,5 @@
-SERVER = miniserver
-CLIENT = miniclient
+SERVER = server
+CLIENT = client
 
 CC = cc
 FLAGS = -Wall -Wextra -Werror -g

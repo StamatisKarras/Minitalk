@@ -6,7 +6,7 @@
 /*   By: skarras <skarras@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 10:30:10 by skarras           #+#    #+#             */
-/*   Updated: 2025/03/19 11:08:07 by skarras          ###   ########.fr       */
+/*   Updated: 2025/03/20 13:17:19 by skarras          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	miniclient(int pid, char *message)
 {
 	int	i;
 
-	if (kill(pid, 0) == -1)
+	if (kill(pid, 0) == -1 || pid <= 0)
 	{
 		write(2, "Invalid PID\n", ft_strlen("Invalid PID\n"));
 		exit(-1);
