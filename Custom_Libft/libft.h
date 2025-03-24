@@ -31,7 +31,8 @@ typedef struct s_list
 	struct s_list	*next;
 }	t_list;
 
-typedef struct s_buffer {
+typedef struct s_buffer
+{
 	int		fd;
 	int		eof;
 	size_t	flushed_bytes;
@@ -39,7 +40,8 @@ typedef struct s_buffer {
 	char	memory[BUFFER_SIZE];
 }	t_buffer;
 
-typedef struct s_line {
+typedef struct s_line
+{
 	char			*line;
 	ssize_t			new_line_index;
 }	t_line;
